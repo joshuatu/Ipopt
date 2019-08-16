@@ -1,9 +1,0 @@
-prefix=/homes/junyi/pardisoIpopt/build
-libdir=/homes/junyi/pardisoIpopt/build/ThirdParty/ASL
-
-Name: ASL
-Description: AMPL Solver Library
-URL: https://projects.coin-or.org/BuildTools
-Version: 1.4
-Libs: ${libdir}/libcoinasl.la -lm -ldl 
-Cflags: -I/homes/junyi/pardisoIpopt/build/ThirdParty/ASL -I/homes/junyi/pardisoIpopt/ThirdParty/ASL/solvers

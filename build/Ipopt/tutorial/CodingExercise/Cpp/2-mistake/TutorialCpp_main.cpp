@@ -1,1 +1,0 @@
-/homes/junyi/pardisoIpopt/Ipopt/tutorial/CodingExercise/Cpp/2-mistake/TutorialCpp_main.cpp

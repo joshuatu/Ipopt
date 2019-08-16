@@ -1,1 +1,0 @@
-/homes/junyi/pardisoIpopt/Ipopt/contrib/RInterface/man/ipoptr-package.Rd
