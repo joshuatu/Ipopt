@@ -1,0 +1,1 @@
+/homes/junyi/pardisoIpopt/Ipopt/tutorial/AmplExperiments/infeasible.mod

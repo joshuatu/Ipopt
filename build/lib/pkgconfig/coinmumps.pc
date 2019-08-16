@@ -1,0 +1,12 @@
+prefix=/homes/junyi/pardisoIpopt/build
+exec_prefix=${prefix}
+libdir=${exec_prefix}/lib
+includedir=${prefix}/include/coin/ThirdParty
+
+Name: Mumps
+Description: Multifrontal Massively Parallel sparse direct Solver
+URL: https://projects.coin-or.org/BuildTools
+Version: 1.6
+Libs: -L${libdir} -lcoinmumps -lblas  -L/nfs/software/linux-ubuntu_trusty_amd64/apps/packages/gcc/gcc-8.2.0/bin/../lib/gcc/x86_64-pc-linux-gnu/8.2.1 -L/nfs/software/linux-ubuntu_trusty_amd64/apps/packages/gcc/gcc-8.2.0/bin/../lib/gcc -L/nfs/software/linux-ubuntu_trusty_amd64/apps/packages/gcc/gcc-8.2.0/bin/../lib/gcc/x86_64-pc-linux-gnu/8.2.1/../../../../lib64 -L/lib/x86_64-linux-gnu -L/lib/../lib64 -L/usr/lib/x86_64-linux-gnu -L/nfs/software/linux-ubuntu_trusty_amd64/apps/packages/gcc/gcc-8.2.0/bin/../lib/gcc/x86_64-pc-linux-gnu/8.2.1/../../.. -lgfortran -lm -lgomp -lquadmath -lpthread
+Cflags: -I${includedir} -DCOIN_USE_MUMPS_MPI_H
+Requires: 

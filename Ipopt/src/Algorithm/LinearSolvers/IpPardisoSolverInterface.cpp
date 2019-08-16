@@ -15,6 +15,8 @@
 #include "IpoptConfig.h"
 #include "IpPardisoSolverInterface.hpp"
 # include <math.h>
+//#include <bits/stdc++.h> 
+//using namespace std;
 
 #ifdef HAVE_CSTDIO
 # include <cstdio>
@@ -271,7 +273,7 @@ void PardisoSolverInterface::RegisterOptions(
       "pardiso_max_iter",
       "Maximum number of Krylov-Subspace Iteration",
       1,
-      500,
+      200,
       "DPARM(1)");
    roptions->AddBoundedNumberOption(
       "pardiso_iter_relative_tol",
@@ -297,26 +299,26 @@ void PardisoSolverInterface::RegisterOptions(
       "dropping value for incomplete factor",
       0.0, true,
       1.0, true,
-      0.5,
+      1e-2,
       "DPARM(5)");
    roptions->AddBoundedNumberOption(
       "pardiso_iter_dropping_schur",
       "dropping value for sparsify schur complement factor",
       0.0, true,
       1.0, true,
-      1e-1,
+      5e-3,
       "DPARM(6)");
    roptions->AddLowerBoundedIntegerOption(
       "pardiso_iter_max_row_fill",
       "max fill for each row",
       1,
-      10000000,
+      10,
       "DPARM(7)");
    roptions->AddLowerBoundedNumberOption(
       "pardiso_iter_inverse_norm_factor",
       "",
       1, true,
-      5000000,
+      500,
       "DPARM(8)");
    roptions->AddStringOption2(
       "pardiso_iterative",
@@ -974,6 +976,9 @@ ESymSolverStatus PardisoSolverInterface::Solve(
 {
    DBG_START_METH("PardisoSolverInterface::Solve", dbg_verbosity);
 
+// Create an empty vector 
+  //  vector<double> vect;
+
    if( HaveIpData() )
    {
       IpData().TimingStats().LinearSystemBackSolve().Start();
@@ -1040,7 +1045,7 @@ ESymSolverStatus PardisoSolverInterface::Solve(
                    &ERROR, DPARM_);
 #endif
 
-      if( ERROR <= -100 && ERROR >= -102 )
+      if( ERROR == -100 || ERROR == -102 || ERROR == -101 )
       {
          Jnlst().Printf(J_WARNING, J_LINEAR_ALGEBRA,
                         "Iterative solver in Pardiso did not converge (ERROR = %d)\n", ERROR);
@@ -1051,15 +1056,25 @@ ESymSolverStatus PardisoSolverInterface::Solve(
          DPARM_[5] /= 2.0;
          Jnlst().Printf(J_WARNING, J_LINEAR_ALGEBRA,
                         "                               to DPARM_[4] = %e and DPARM_[5] = %e\n", DPARM_[4], DPARM_[5]);
+       
          attempts++;
-         ERROR = 0;
+       Jnlst().Printf(J_WARNING,J_LINEAR_ALGEBRA, "attempts=%i\n", attempts);
+          ERROR = 0;
       }
       else
       {
          attempts = max_attempts;
+         Jnlst().Printf(J_WARNING,J_LINEAR_ALGEBRA, "Exit While from the Else Branch\n");
          // TODO we could try again with some PARDISO parameters changed, i.e., enabling iterative refinement
       }
    }
+
+       // DPARM_[4] =0.01;// pardiso_iter_dropping_factor;
+       // DPARM_[5] = 0.005;//pardiso_iter_dropping_shur;
+   Jnlst().Printf(J_WARNING,J_LINEAR_ALGEBRA, "Number of linear Solover Iteration---%f, After WHILE\n", DPARM_[34]);
+
+//vect.push_back(DPARM_[34]); 
+
 
    delete[] X;
    delete[] ORIG_RHS;
@@ -1084,6 +1099,10 @@ ESymSolverStatus PardisoSolverInterface::Solve(
                      "Error in Pardiso during solve phase.  ERROR = %d.\n", ERROR);
       return SYMSOLVER_FATAL_ERROR;
    }
+
+Jnlst().Printf(J_ERROR, J_LINEAR_ALGEBRA,
+                     "We return SUCCESS ???  ERROR = %d.\n", ERROR);
+ 
    return SYMSOLVER_SUCCESS;
 }
 

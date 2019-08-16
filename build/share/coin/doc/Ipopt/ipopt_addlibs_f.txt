@@ -1,0 +1,1 @@
+             -L/homes/junyi/pardisoIpopt/build/lib -L/homes/junyi/Pardiso/ -lipopt -lpardiso600-GNU720-X86-64 -ldl -lcoinmumps -lcoinhsl -llapack -lblas                -lstdc++ -lm
