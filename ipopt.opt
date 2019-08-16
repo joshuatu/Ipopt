@@ -1,0 +1,7 @@
+linear_solver pardiso
+pardiso_iterative yes
+pardiso_max_iter 400
+pardiso_iter_dropping_factor 0.01
+pardiso_iter_dropping_schur 0.005
+pardiso_iter_max_row_fill 10
+pardiso_iter_inverse_norm_factor 500
