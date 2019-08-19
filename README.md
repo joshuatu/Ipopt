@@ -104,7 +104,7 @@ println("Loading lapack")
 liblapack=Libdl.dlopen("/usr/lib/x86_64-linux-gnu/liblapack.so",RTLD_GLOBAL)
 liblapack=Libdl.dlopen("/usr/lib/x86_64-linux-gnu/libomp.so",RTLD_GLOBAL)
 ```
-**use something like: `find /usr/lib -name 'liblapack` 
+**use something like:** `find /usr/lib -name 'liblapack` 
 
 ipopt.opt
 ------
