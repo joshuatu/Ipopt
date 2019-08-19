@@ -87,6 +87,32 @@ Getting Help
  * **[Issue tracking system](https://github.com/coin-or/Ipopt/issues/)**: If you believe you found a **bug** in the code, please use the issue tracking system.
    Please include as much information as possible, and if possible some (ideally simple) example code so that we can reproduce the error.
 
+ Configure options:
+ -----------------
+  '''
+  softenv
+  soft add +gcc-8.2.0
+  ../configure ADD_FFLAGS='-fopenmp' ADD_CFLAGS='-fopenmp' ADD_CXXFLAGS='-fopenmp' --with-pardiso="-L$HOME/Pardiso/ -lpardiso600-GNU720-X86-64 -lgomp"
+  '''
+
+Run pardiso through julia:
+-------------------------
+using Libdl
+println("Loading lapack")
+liblapack=Libdl.dlopen("/usr/lib/x86_64-linux-gnu/liblapack.so",RTLD_GLOBAL)
+liblapack=Libdl.dlopen("/usr/lib/x86_64-linux-gnu/libomp.so",RTLD_GLOBAL)
+
+*use something like: find /usr/lib -name 'liblapack*
+
+option.opt
+------
+linear_solver pardiso
+pardiso_iterative yes
+pardiso_max_iter 400
+pardiso_iter_dropping_factor 0.01
+pardiso_iter_dropping_schur 0.005
+pardiso_iter_max_row_fill 10
+pardiso_iter_inverse_norm_factor 500
 
 Please Cite Us
 --------------
@@ -99,29 +125,6 @@ Since a lot of time and effort has gone into Ipopt's development, **please cite 
 * A. Wächter and L. T. Biegler, **[On the Implementation of a Primal-Dual Interior Point Filter Line Search Algorithm for Large-Scale Nonlinear Programming](http://dx.doi.org/10.1007/s10107-004-0559-y)**, _Mathematical Programming_ 106(1), pp. 25-57, 2006
   ([preprint](http://www.optimization-online.org/DB_HTML/2004/03/836.html))
   
-  @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-  Added by Junyi Tu
-  @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-  
-  %%%%%%%%Configure options:
-  
-  softenv
-  soft add +gcc-8.2.0
-  ../configure ADD_FFLAGS='-fopenmp' ADD_CFLAGS='-fopenmp' ADD_CXXFLAGS='-fopenmp' --with-pardiso="-L$HOME/Pardiso/ -lpardiso600-GNU720-X86-64 -lgomp"
  
- %%%%%%%%%run pardiso through julia:
-using Libdl
-println("Loading lapack")
-liblapack=Libdl.dlopen("/usr/lib/x86_64-linux-gnu/liblapack.so",RTLD_GLOBAL)
-liblapack=Libdl.dlopen("/usr/lib/x86_64-linux-gnu/libomp.so",RTLD_GLOBAL)
-
-??????use something like: find /usr/lib -name 'liblapack*
-
-%%%%%%%%%%% option.opt
-linear_solver pardiso
-pardiso_iterative yes
-pardiso_max_iter 400
-pardiso_iter_dropping_factor 0.01
-pardiso_iter_dropping_schur 0.005
-pardiso_iter_max_row_fill 10
-pardiso_iter_inverse_norm_factor 500
+ 
+ 
